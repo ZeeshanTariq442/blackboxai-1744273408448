@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.edupapers.app.R;
 import com.edupapers.app.utils.PreferenceManager;
@@ -69,11 +70,14 @@ public class SplashActivity extends AppCompatActivity {
             preferenceManager.setBoolean("first_launch", false);
             
             // Set default theme
-            if (!preferenceManager.contains("theme_mode")) {
-                preferenceManager.setInt("theme_mode", 
-                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            if (!preferenceManager.contains(PreferenceManager.KEY_THEME_MODE)) {
+                preferenceManager.setThemeMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             }
         }
+        
+        // Apply current theme
+        int currentTheme = preferenceManager.getThemeMode();
+        AppCompatDelegate.setDefaultNightMode(currentTheme);
     }
 
     private void startHomeActivity() {
